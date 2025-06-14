@@ -1,0 +1,70 @@
+name: dbt Core CI with venv
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+
+jobs:
+  dbt-core-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Create virtual environment
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Set up dbt profiles
+      run: |
+        mkdir -p ~/.dbt
+        cat <<EOF > ~/.dbt/profiles.yml
+        my_project:
+          target: dev
+          outputs:
+            dev:
+              type: snowflake
+              account: "${{ secrets.SNOWFLAKE_ACCOUNT }}"
+              user: "${{ secrets.SNOWFLAKE_USER }}"
+              password: "${{ secrets.SNOWFLAKE_PASSWORD }}"
+              role: "${{ secrets.SNOWFLAKE_ROLE }}"
+              database: "${{ secrets.SNOWFLAKE_DATABASE }}"
+              schema: "${{ secrets.SNOWFLAKE_SCHEMA }}"
+              warehouse: "${{ secrets.SNOWFLAKE_WAREHOUSE }}"
+              threads: 4
+        EOF
+
+    - name: Activate venv and run dbt debug
+      run: |
+        source venv/bin/activate
+        dbt debug --profiles-dir ~/.dbt
+
+    - name: Install dbt packages (if using packages.yml)
+      run: |
+        source venv/bin/activate
+        dbt deps
+
+    - name: Run dbt seed
+      run: |
+        source venv/bin/activate
+        dbt seed --full-refresh --profiles-dir ~/.dbt
+
+    - name: Run dbt models
+      run: |
+        source venv/bin/activate
+        dbt run --profiles-dir ~/.dbt
+
+    - name: Run dbt tests
+      run: |
+        source venv/bin/activate
+        dbt test --profiles-dir ~/.dbt
