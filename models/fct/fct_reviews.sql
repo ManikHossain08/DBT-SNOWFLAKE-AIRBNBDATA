@@ -1,7 +1,9 @@
 {{
  config(
  materialized = 'incremental',
- on_schema_change='fail'
+ unique_key='listing_id',
+ on_schema_change='fail',
+ incremental_strategy='merge'
  )
 }}
 WITH src_reviews AS (
