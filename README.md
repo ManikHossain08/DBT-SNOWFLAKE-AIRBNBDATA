@@ -15,3 +15,25 @@ Try running the following commands:
 - Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
 # DBT-SNOWFLAKE-AIRBNBDATA
 # DBT-SNOWFLAKE-AIRBNBDATA
+
+# DBT command to start a project:
+
+Go to the project directory : then 
+
+Create and activate a virtual environment:
+
+bash
+
+python3 -m venv venv
+source venv/bin/activate
+Install dbt inside it:
+
+bash
+
+pip install dbt-snowflake
+Now try:
+
+bash
+
+dbt --version
+dbt debug
