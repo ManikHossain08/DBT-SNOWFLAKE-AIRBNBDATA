@@ -22,4 +22,7 @@ models:
           - not_null
           - accepted_values:
               values: ['Entire home/apt', 'Private room', 'Shared room', 'Hotel room']
-
+      - name: minimum_nights
+        description: "Minimum number of nights required for booking."
+        tests:
+          - positive_value

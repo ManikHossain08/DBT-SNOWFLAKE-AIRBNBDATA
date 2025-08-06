@@ -7,13 +7,6 @@ Try running the following commands:
 - dbt test
 
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
-# DBT-SNOWFLAKE-AIRBNBDATA
 # DBT-SNOWFLAKE-AIRBNBDATA
 
 # DBT command to start a project:
@@ -112,3 +105,6 @@ Executing command: GRANT ALL ON WAREHOUSE COMPUTE_WH TO ROLE REPORTER
 Executing command: GRANT USAGE ON DATABASE AIRBNB TO ROLE REPORTER
 
 Patching Reporter command: GRANT USAGE ON FUTURE SCHEMAS IN DATABASE AIRBNB TO ROLE REPORTER;
+
+
+https://dbt-data-importer.streamlit.app/
